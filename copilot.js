@@ -3,9 +3,10 @@
 const { firefox } = require('playwright-firefox');
 const fs = require('fs');
 
-const cookieStr = fs.readFileSync('./cookies', 'utf8');
+const cookieStr = fs.readFileSync(`${__dirname}` + '/cookies', 'utf8');
 const searchText = process.argv[2];
 const url = 'https://copilot.microsoft.com/';
+const buttonPrecise = '.tone-precise';
 const buttonQuestion = '.rai-button';
 const buttonSubmit = '.submit';
 const textMessage = '.content[tabindex="0"] .ac-textBlock';
@@ -25,6 +26,9 @@ firefox.launch({ headless: true, timeout: 50000 }).then(async browser => {
   const page = await context.newPage();
   await page.goto(url, { waitUntil: 'domcontentloaded' });
   page.setDefaultTimeout(50000);
+
+  // Select "Precise" mode
+  await page.click(buttonPrecise);
 
   // Submit question
   await page.fill(textareaSearchBox, searchText);
