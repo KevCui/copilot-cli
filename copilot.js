@@ -9,7 +9,7 @@ const url = 'https://copilot.microsoft.com/';
 const buttonExport = '#export-button';
 const buttonSubmit = '.submit';
 const buttonReject = '.bnp_btn_reject';
-const textMessage = '.content[tabindex="0"] .ac-textBlock';
+const textMessage = '.ac-container';
 const textareaSearchBox = '#searchbox';
 
 chromium.launch({ headless: true, timeout: 50000 }).then(async browser => {
