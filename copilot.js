@@ -1,49 +1,35 @@
 #!/usr/bin/env node
 
-const { firefox } = require('playwright-firefox');
-const fs = require('fs');
+const { chromium } = require('playwright-extra');
+const stealth = require('puppeteer-extra-plugin-stealth')();
+chromium.use(stealth);
 
-const cookieStr = fs.readFileSync(`${__dirname}` + '/cookies', 'utf8');
 const searchText = process.argv[2];
 const url = 'https://copilot.microsoft.com/';
-const buttonPrecise = '.tone-precise';
-const buttonQuestion = '.rai-button';
+const buttonExport = '#export-button';
 const buttonSubmit = '.submit';
+const buttonReject = '.bnp_btn_reject';
 const textMessage = '.content[tabindex="0"] .ac-textBlock';
 const textareaSearchBox = '#searchbox';
 
-firefox.launch({ headless: true, timeout: 50000 }).then(async browser => {
-  const context = await browser.newContext();
-
-  // Set cookies
-  const cookies = cookieStr.split(';').map(cookie => {
-    const [name, value] = cookie.trim().split('=');
-    return { name, value, domain: 'copilot.microsoft.com', path: '/' };
-  });
-  await context.addCookies(cookies);
-
+chromium.launch({ headless: true, timeout: 50000 }).then(async browser => {
   // Start page
-  const page = await context.newPage();
+  const page = await browser.newPage();
   await page.goto(url, { waitUntil: 'domcontentloaded' });
   page.setDefaultTimeout(50000);
 
-  // Select "Precise" mode
-  await page.click(buttonPrecise);
+  // Reject cookie
+  await page.click(buttonReject);
 
   // Submit question
   await page.fill(textareaSearchBox, searchText);
   await page.click(buttonSubmit);
 
   // Get reply
-  await page.waitForSelector(buttonQuestion);
+  await page.waitForSelector(buttonExport);
   const result = await page.locator(textMessage).textContent();
   console.log(result);
 
-  // Delete chat
-  await page.locator('.delete').first().click();
-  await page.waitForTimeout(1000);
-
   // Close browser
-  await context.close();
   await browser.close();
 });

@@ -6,27 +6,19 @@
 
 - [Dependency](#dependency)
 - [Installation](#installation)
-- [Create cookies file](#create-cookies-file)
 - [How to use](#how-to-use)
 - [Note](#note)
 
 ## Dependency
 
-- [playwright-firefox](https://github.com/Microsoft/playwright)
+- [playwright-chromium](https://github.com/Microsoft/playwright)
 
 ## Installation
 
 ```bash
-npm i playwright-firefox
-npx playwright install firefox
+npm i playwright-chromium playwright-extra puppeteer-extra-plugin-stealth
+npx playwright install chromium
 ```
-
-## Create cookies file
-
-- Open browser DevTools and sign in `https://copilot.microsoft.com/`
-- Get cookie string from `cookie` header in any request
-- Save it in the file called `./cookies`
-- When cookies gets expired, repeat above steps to save new string into the same file
 
 ## How to use
 
@@ -36,7 +28,7 @@ $ ./copilot.js "enter any text here"
 
 ## Note
 
-This script is designed to handle only one question and one answer at a time. The answer is in plain text format. It is designed for command line usage to get quick answer in terminal, not for a nice looking conversation with Microsoft Copilot.
+This script is designed to handle a single question and answer at a time. The response is provided in plain text format. It is designed for command-line usage, allowing users to quickly retrieve answers in the terminal, rather than for engaging a coversation with Microsoft Copilot.
 
 ---
 
