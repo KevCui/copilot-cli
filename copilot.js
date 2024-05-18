@@ -15,8 +15,16 @@ const textareaSearchBox = '#searchbox';
 chromium.launch({ headless: true, timeout: 50000 }).then(async browser => {
   // Start page
   const page = await browser.newPage();
-  await page.goto(url, { waitUntil: 'domcontentloaded' });
   page.setDefaultTimeout(50000);
+  await page.route("**/*", (route, request) => {
+    if (request.resourceType() === "image"
+      || request.resourceType() === "media") {
+      route.abort();
+    } else {
+      route.continue();
+    }
+  });
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
 
   // Reject cookie
   await page.click(buttonReject);
