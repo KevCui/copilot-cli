@@ -1,21 +1,18 @@
 #!/usr/bin/env node
 
-const { chromium } = require('playwright-extra');
-const stealth = require('puppeteer-extra-plugin-stealth')();
-chromium.use(stealth);
+const { chromium } = require('playwright-chromium');
 
 const searchText = process.argv[2];
-const url = 'https://copilot.microsoft.com/';
+const url = 'https://www.bing.com/chat';
 const buttonExport = '#export-button';
 const buttonSubmit = '.submit';
-const buttonReject = '.bnp_btn_reject';
 const textMessage = '.ac-container';
 const textareaSearchBox = '#searchbox';
 
-chromium.launch({ headless: true, timeout: 50000 }).then(async browser => {
-  // Start page
+chromium.launch({ headless: true, timeout: 30000 }).then(async browser => {
+  // Set page
   const page = await browser.newPage();
-  page.setDefaultTimeout(50000);
+  page.setDefaultTimeout(30000);
   await page.route("**/*", (route, request) => {
     if (request.resourceType() === "image"
       || request.resourceType() === "media") {
@@ -24,10 +21,9 @@ chromium.launch({ headless: true, timeout: 50000 }).then(async browser => {
       route.continue();
     }
   });
-  await page.goto(url, { waitUntil: 'domcontentloaded' });
 
-  // Reject cookie
-  await page.click(buttonReject);
+  // Start page
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
 
   // Submit question
   await page.fill(textareaSearchBox, searchText);
