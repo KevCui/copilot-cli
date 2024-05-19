@@ -28,7 +28,7 @@ $ ./copilot.js "enter any text here"
 
 ## Note
 
-This script is designed to handle a single question and answer at a time. The response is provided in plain text format. It is designed for command-line usage, allowing users to quickly retrieve answers in the terminal, rather than for engaging a coversation with Microsoft Copilot.
+This script is designed to process one question and answer at a time, delivering in plain text format. It is optimized for command-line use, enabling users to rapidly retrieve answers directly in the terminal, without having to engage in a conversation with Microsoft Copilot.
 
 ---
 
