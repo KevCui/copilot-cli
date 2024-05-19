@@ -7,6 +7,7 @@
 - [Dependency](#dependency)
 - [Installation](#installation)
 - [How to use](#how-to-use)
+- [Want an alternative?](#want-an-alternative)
 - [Note](#note)
 
 ## Dependency
@@ -25,6 +26,10 @@ npx playwright install chromium
 ```bash
 $ ./copilot.js "enter any text here"
 ```
+
+## Want an alternative?
+
+Check out [perplexity-cli](https://github.com/KevCui/perplexity-cli)
 
 ## Note
 
