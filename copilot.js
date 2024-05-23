@@ -5,7 +5,6 @@ const { chromium } = require('playwright-chromium');
 const searchText = process.argv[2];
 const url = 'https://copilot.microsoft.com';
 const buttonSubmit = '.submit';
-const buttonReject = '.bnp_btn_reject';
 const buttonStop = '#stop-responding-button';
 const textMessage = '.ac-container';
 const textareaSearchBox = '#searchbox';
@@ -26,9 +25,6 @@ chromium.launch({ headless: true, timeout: 30000 }).then(async browser => {
 
   // Start page
   await page.goto(url, { waitUntil: 'domcontentloaded' });
-
-  // Reject cookie
-  await page.click(buttonReject);
 
   // Submit question
   await page.fill(textareaSearchBox, searchText);
