@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
-const { chromium } = require('playwright-chromium');
+const { chromium } = require('playwright-extra');
+const stealth = require('puppeteer-extra-plugin-stealth')();
+chromium.use(stealth);
 
 const searchText = process.argv[2];
 const url = 'https://copilot.microsoft.com';
@@ -33,6 +35,7 @@ chromium.launch({ headless: true, timeout: 30000 }).then(async browser => {
   // Submit question
   await page.fill(textareaSearchBox, searchText);
   await page.click(buttonSubmit);
+
 
   // Get reply
   for (let i = 0; i < totalLoopCount; i++) {
