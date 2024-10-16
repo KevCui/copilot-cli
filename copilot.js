@@ -7,7 +7,7 @@ chromium.use(stealth);
 const searchText = process.argv[2];
 const url = 'https://copilot.microsoft.com';
 const buttonStart = '[title="Get started"]';
-const buttonSkip = '[title="Skip"]';
+const buttonNext = '[title="Next"]';
 const buttonSubmit = '[title="Submit message"]';
 const textFirstName = '[placeholder="Your first name"]';
 const textMessage = '[data-content="ai-message"] div';
@@ -37,8 +37,8 @@ chromium.launch({ headless: true, timeout: 30000 }).then(async browser => {
   await page.fill(textFirstName, 'x');
   await page.click(buttonSubmit);
 
-  // Click "Skip" button
-  await page.click(buttonSkip);
+  // Click "Next" button
+  await page.click(buttonNext);
 
   // Submit question
   await page.fill(textareaSearchBox, searchText);
