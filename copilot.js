@@ -31,14 +31,23 @@ chromium.launch({ headless: true, timeout: 30000 }).then(async browser => {
   await page.goto(url, { waitUntil: 'domcontentloaded' });
 
   // Click "Get start" button
-  await page.click(buttonStart);
+  try {
+    await page.locator(buttonStart).waitFor({ timeout: 1000})
+    await page.click(buttonStart);
+  } catch (e) {}
 
   // Fill first name
-  await page.fill(textFirstName, 'x');
-  await page.click(buttonSubmit);
+  try { 
+    await page.locator(textFirstName).waitFor({ timeout: 1000})
+    await page.fill(textFirstName, 'x');
+    await page.click(buttonSubmit);
+  } catch (e) {}
 
   // Click "Next" button
-  await page.click(buttonNext);
+  try { 
+    await page.locator(buttonNext).waitFor({ timeout: 1000})
+    await page.click(buttonNext);
+  } catch (e) {}
 
   // Submit question
   await page.fill(textareaSearchBox, searchText);
